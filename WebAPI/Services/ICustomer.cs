@@ -8,5 +8,6 @@ namespace WebAPI.Services
 
         bool Delete(int ID);
         List<Books> GetBooks();
+        Books GetBookbyId(int ID);  
     }
 }

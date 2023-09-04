@@ -101,5 +101,34 @@ namespace WebAPI.Services
             }
             Console.WriteLine($"UpdatedDatabase :Updating the database is in process...");
         }
+
+        public Books GetBookbyId(int ID)
+        {
+            Books books = new Books();
+            string cstring = _configuration.GetValue<string>("connectionstrings:defaultconnection");
+            SqlConnection con = new SqlConnection(cstring);
+            con.Open();
+            using(SqlCommand cmd = new SqlCommand($"Select * from Books where BooKID={ID}",con))
+            {
+              SqlDataReader dr = cmd.ExecuteReader();
+              while(dr.Read())
+                {
+
+                    books.BookID =Convert.ToInt32( dr["BookID"]);
+                    books.Name = dr["Name"].ToString();
+                    books.Author = dr["Author"].ToString();
+
+
+                }
+            }
+            if (books != null)
+            {
+                return books;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
     }
